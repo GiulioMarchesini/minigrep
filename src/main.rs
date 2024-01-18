@@ -1,7 +1,7 @@
 // GREP : Globally search a Regular Expression and print
 // $ cargo run -- searchstring example-filename.txt
 // esempio di comando per usare il programma:
-// $ cargo run -- Are poem.txt
+// $ cargo run -- body poem.txt
 
 // libreria definita da me per il progetto
 use minigrep::run;
@@ -20,9 +20,6 @@ fn main() {
         println!("Problem parsing arguments: {}", err);
         std::process::exit(1); // 1 indica che il programma è terminato in modo anomalo
     });
-
-    println!("Searching for {}", config.query);
-    println!("In file {}", config.file_path);
 
     // 3 leggere il file
     if let Err(e) = run(config) {

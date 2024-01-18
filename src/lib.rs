@@ -23,8 +23,35 @@ impl Config {
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     // dyn indica che il tipo di errore è dinamico, può essere di qualsiasi tipo
     let contents = std::fs::read_to_string(config.file_path)?;
-
-    println!("With text:\n{}", contents);
-
+    let results = search(&config.query, &contents);
+    for line in results {
+        println!("{}", line);
+    }
     Ok(()) // non ritorna niente, serve solo per indicare che la funzione è andata a buon fine
+}
+
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    let mut results = Vec::new(); // vettore che conterrà i risultati
+    for line in contents.lines() {
+        if line.contains(query) {
+            results.push(line);
+        }
+    }
+    results
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_search() {
+        let query = "duct";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three."; // \ indica che la stringa continua nella riga successiva
+
+        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
+    }
 }
