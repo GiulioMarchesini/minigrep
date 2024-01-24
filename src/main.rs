@@ -1,7 +1,9 @@
 // GREP : Globally search a Regular Expression and print
 // $ cargo run -- searchstring example-filename.txt
-// esempio di comando per usare il programma:
+// esempio di comando per usare il programma case sensitive:
 // $ cargo run -- body poem.txt
+// esempio di comando per usare il programma case insensitive:
+// $ IGNORE_CASE=1 cargo run -- body poem.txt
 
 // libreria definita da me per il progetto
 use minigrep::run;
