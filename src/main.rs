@@ -1,29 +1,20 @@
-// GREP : Globally search a Regular Expression and print
-// $ cargo run -- searchstring example-filename.txt
-// esempio di comando per usare il programma case sensitive:
-// $ cargo run -- body poem.txt
-// esempio di comando per usare il programma case insensitive:
-// $ IGNORE_CASE=1 cargo run -- body poem.txt
-// eswempio di comando per stampare il risultato su file e gli errori sul terminale:
-// $ cargo run -- to poem.txt > output.txt
-
-// libreria definita da me per il progetto
+// Custom library defined for the project
 use minigrep::run;
-use minigrep::Config; // shortcut per usare la libreria standard, tipo using namespace in c++
-use std::env; // per leggere gli argomenti passati dal terminale
+use minigrep::Config; // Shortcut to use the standard library, similar to using namespace in C++
+use std::env; // To read arguments passed from the terminal
 
 fn main() {
-    // env::args() restituisce un iteratore che contiene gli argomenti passati al programma
+    // env::args() returns an iterator containing the arguments passed to the program
     let config = Config::build(env::args()).unwrap_or_else(|err| {
-        // se la funzione build ritorna un errore, stampa il messaggio e termina il programma
-        eprintln!("Problem parsing arguments: {}", err); // eprintln stampa su stderr invece che stdout
-        std::process::exit(1); // 1 indica che il programma è terminato in modo anomalo
+        // If the build function returns an error, print the message and terminate the program
+        eprintln!("Problem parsing arguments: {}", err); // eprintln prints to stderr instead of stdout
+        std::process::exit(1); // 1 indicates that the program terminated abnormally
     });
 
-    // leggere il file
+    // Read the file
     if let Err(e) = run(config) {
-        // se la funzione run ritorna un errore, stampa il messaggio e termina il programma
+        // If the run function returns an error, print the message and terminate the program
         eprintln!("Application error: {e}");
-        std::process::exit(1); // 1 indica che il programma è terminato in modo anomalo
+        std::process::exit(1); // 1 indicates that the program terminated abnormally
     }
 }
